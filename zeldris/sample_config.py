@@ -33,7 +33,7 @@ class Config(object):
     # REQUIRED
     TOKEN = ""  # Take from @BotFather
     OWNER_ID = (
-          # If you dont know, run the bot and do /id in your private chat with it
+        # If you dont know, run the bot and do /id in your private chat with it
     )
     OWNER_USERNAME = ""
     API_HASH = None  # for purge stuffs
@@ -68,7 +68,7 @@ class Config(object):
     STRICT_GBAN = True
     WORKERS = 8  # Number of subthreads to use. This is the recommended amount - see for yourself what works best!
     BAN_STICKER = None  # banhammer marie sticker
-    ALLOW_EXCL = True # DEPRECATED, USE BELOW INSTEAD! Allow ! commands as well as /
+    ALLOW_EXCL = True  # DEPRECATED, USE BELOW INSTEAD! Allow ! commands as well as /
     CUSTOM_CMD = False  # Set to ('/', '!') or whatever to enable it, like ALLOW_EXCL but with more custom handler!
     API_OPENWEATHER = ""  # OpenWeather API
     SPAMWATCH_API = ""  # Your SpamWatch token
