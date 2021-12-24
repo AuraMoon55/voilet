@@ -26,7 +26,8 @@ from zeldris import (
     StartTime,
     client as telethn,
     updater,
-    pbot)
+    pbot,
+)
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
@@ -58,7 +59,7 @@ from telegram.utils.helpers import escape_markdown
 from pyrogram import Client, idle
 from telethon import Button
 
-    
+
 def get_readable_time(seconds: int) -> str:
     count = 0
     ping_time = ""
@@ -83,11 +84,12 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
+
 HELP_IMG = "https://telegra.ph/file/b920d0c82a1ec55045bec.mp4"
 HELP_MSG = "Click the button below to get help menu in your pm."
 START_MSG = "I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>"
 START_IMG = "https://telegra.ph/file/d85f39ca5e58ef5644401.mp4"
-    
+
 PM_START_TEXT = """
 ────「 [{}](https://telegra.ph/file/d8d515b36537c6375246d.jpg) 」────
 Heyyo `{}`, Voilet here to help,
@@ -108,26 +110,25 @@ Haven't slept since: {}
 buttons = [
     [
         InlineKeyboardButton(
-            text="💖 ADD ME IN YOUR GROUP",url="t.me/voilet_probot?startgroup=true"),
+            text="💖 ADD ME IN YOUR GROUP", url="t.me/voilet_probot?startgroup=true"
+        ),
     ],
     [
         InlineKeyboardButton(
-            text="⚙️ Support", url=f"https://t.me/villainevil_support"),
-        InlineKeyboardButton(
-            text="🎉 Updates", url="https://t.me/dabi_updates"),],
-        [InlineKeyboardButton(
-            text="Wizard", url="https://t.me/Dabi_updates/9"),
-         InlineKeyboardButton(
-            text="Group", url="https://t.me/Villains_Association_1"),
-    ],
-    [                    
-        InlineKeyboardButton(
-            text="🔐 Help", callback_data="help_back"
+            text="⚙️ Support", url=f"https://t.me/villainevil_support"
         ),
+        InlineKeyboardButton(text="🎉 Updates", url="https://t.me/dabi_updates"),
+    ],
+    [
+        InlineKeyboardButton(text="Wizard", url="https://t.me/Dabi_updates/9"),
+        InlineKeyboardButton(text="Group", url="https://t.me/Villains_Association_1"),
+    ],
+    [
+        InlineKeyboardButton(text="🔐 Help", callback_data="help_back"),
     ],
 ]
 
-                    
+
 HELP_STRINGS = """
 *Main* commands available:
  ➛ /help: PM's you this message.
@@ -250,25 +251,32 @@ def start(update: Update, context: CallbackContext):
                     escape_markdown(first_name),
                     escape_markdown(uptime),
                     sql.num_users(),
-                    sql.num_chats()),                        
+                    sql.num_chats(),
+                ),
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
                 timeout=60,
             )
     else:
-                update.effective_message.reply_video(
-            START_IMG, "ʏᴏ, Voilet ʜᴇʀᴇ ᴛᴏ ʜᴇʟᴘ!\n<b>Haven't slept since:</b> <code>{}</code>".format(
+        update.effective_message.reply_video(
+            START_IMG,
+            "ʏᴏ, Voilet ʜᴇʀᴇ ᴛᴏ ʜᴇʟᴘ!\n<b>Haven't slept since:</b> <code>{}</code>".format(
                 uptime,
             ),
             parse_mode=ParseMode.HTML,
-             reply_markup=InlineKeyboardMarkup(
+            reply_markup=InlineKeyboardMarkup(
                 [
-                  [
-                  InlineKeyboardButton(text="❤Sᴜᴘᴘᴏʀᴛ❤", url="https://telegram.dog/Villainevil_support")
-                  ],
-                  [
-                  InlineKeyboardButton(text="🔰Uᴘᴅᴀᴛᴇs🔰", url="https://telegram.dog/Dabi_updates")
-                  ]
+                    [
+                        InlineKeyboardButton(
+                            text="❤Sᴜᴘᴘᴏʀᴛ❤",
+                            url="https://telegram.dog/Villainevil_support",
+                        )
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="🔰Uᴘᴅᴀᴛᴇs🔰", url="https://telegram.dog/Dabi_updates"
+                        )
+                    ],
                 ]
             ),
         )
@@ -299,7 +307,9 @@ def error_handler(update, context):
     if len(message) >= 4096:
         message = message[:4096]
     # Finally, send the message
-    context.bot.send_message(chat_id=-1001501815938, text=message, parse_mode=ParseMode.HTML)
+    context.bot.send_message(
+        chat_id=-1001501815938, text=message, parse_mode=ParseMode.HTML
+    )
 
 
 # for test purposes
@@ -342,9 +352,7 @@ def help_button(update, context):
         if mod_match:
             module = mod_match.group(1)
             text = (
-                "╒═══「 *{}* module: 」\n".format(
-                    HELPABLE[module].__mod_name__
-                )
+                "╒═══「 *{}* module: 」\n".format(HELPABLE[module].__mod_name__)
                 + HELPABLE[module].__help__
             )
             query.message.edit_text(
@@ -392,6 +400,7 @@ def help_button(update, context):
     except BadRequest:
         pass
 
+
 def asuna_callback_data(update, context):
     query = update.callback_query
     uptime = get_readable_time((time.time() - StartTime))
@@ -401,26 +410,23 @@ def asuna_callback_data(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [
-                 [
-                    InlineKeyboardButton(text="[Back]", callback_data="help_back")
-                 ]
-                ]
+                [[InlineKeyboardButton(text="[Back]", callback_data="help_back")]]
             ),
         )
     elif query.data == "asuna_back":
         first_name = update.effective_user.first_name
         query.message.edit_text(
-                PM_START_TEXT.format(
-                    escape_markdown(context.bot.first_name),
-                    escape_markdown(first_name),
-                    escape_markdown(uptime),
-                    sql.num_users(),
-                    sql.num_chats()),
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-                disable_web_page_preview=False,
+            PM_START_TEXT.format(
+                escape_markdown(context.bot.first_name),
+                escape_markdown(first_name),
+                escape_markdown(uptime),
+                sql.num_users(),
+                sql.num_chats(),
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=ParseMode.MARKDOWN,
+            timeout=60,
+            disable_web_page_preview=False,
         )
 
 
@@ -432,8 +438,9 @@ def get_help(update, context):
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
 
-        update.effective_message.reply_photo(          
-            START_IMG, HELP_MSG,
+        update.effective_message.reply_photo(
+            START_IMG,
+            HELP_MSG,
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
@@ -450,9 +457,7 @@ def get_help(update, context):
     if len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
         text = (
-            " 〔 *{}* 〕\n".format(
-                HELPABLE[module].__mod_name__
-            )
+            " 〔 *{}* 〕\n".format(HELPABLE[module].__mod_name__)
             + HELPABLE[module].__help__
         )
         send_help(
@@ -465,7 +470,6 @@ def get_help(update, context):
 
     else:
         send_help(chat.id, HELP_STRINGS)
-
 
 
 def send_settings(chat_id, user_id, user=False):
@@ -675,7 +679,8 @@ def migrate_chats(update: Update, context: CallbackContext):
 
     LOGGER.info("Successfully migrated!")
     raise DispatcherHandlerStop
-    
+
+
 def main():
 
     if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
@@ -691,11 +696,9 @@ def main():
             )
         except BadRequest as e:
             LOGGER.warning(e.message)
-     
 
     test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start)
-
 
     help_handler = DisableAbleCommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_.*")
@@ -740,7 +743,7 @@ def main():
     updater.idle()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     telethn.start(bot_token=TOKEN)
     main()

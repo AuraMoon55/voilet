@@ -309,6 +309,7 @@ async def _(event):
     except Exception as e:
         print(e)
 
+
 __mod_name__ = "Night Mode"
 __help__ = """
  ❍ /nightmode on/off
